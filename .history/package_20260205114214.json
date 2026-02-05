@@ -1,0 +1,24 @@
+{
+  "name": "vue-monorepo-workspace",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Vue 3 Monorepo with shared components, utils and composables",
+  "scripts": {
+    "dev": "pnpm -r --parallel run dev",
+    "dev:app": "pnpm --filter @myorg/app dev",
+    "build": "pnpm --filter @myorg/shared build && pnpm --filter @myorg/app build",
+    "build:shared": "pnpm --filter @myorg/shared build",
+    "build:app": "pnpm --filter @myorg/app build",
+    "preview": "pnpm --filter @myorg/app preview",
+    "lint": "eslint packages --ext .vue,.ts,.tsx",
+    "clean": "pnpm -r run clean && rimraf node_modules"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
+  },
+  "packageManager": "pnpm@8.15.0",
+  "devDependencies": {
+    "@types/node": "^25.2.0"
+  }
+}
