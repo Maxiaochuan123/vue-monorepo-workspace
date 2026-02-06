@@ -1,12 +1,43 @@
+# Dependencies
 node_modules
+.pnpm-store
+
+# Build outputs
 dist
-.DS_Store
-*.local
+dist-ssr
+*.tsbuildinfo
+
+# Logs
+logs
 *.log
-.idea
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# IDEs & Editors
 .vscode
+.idea
 .history
+.claude
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Testing & Coverage
 coverage
 
-# Turborepo
+# Local Env
+*.local
+.env.*.local
+
+# Tools
 .turbo
+.eslintcache
+stats.html
