@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import dts from 'vite-plugin-dts'
-import { resolve } from 'path'
+import { resolve } from 'node:path'
 
 export default defineConfig({
   plugins: [
@@ -15,7 +15,7 @@ export default defineConfig({
   build: {
     lib: {
       entry: {
-        index: resolve(__dirname, 'src/index.ts'),
+        'index': resolve(__dirname, 'src/index.ts'),
         'components/index': resolve(__dirname, 'src/components/index.ts'),
         'composables/index': resolve(__dirname, 'src/composables/index.ts'),
         'utils/index': resolve(__dirname, 'src/utils/index.ts'),

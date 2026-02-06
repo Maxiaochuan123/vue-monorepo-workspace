@@ -37,7 +37,7 @@ const features = [
 ]
 
 const router = useRouter()
-const go = (path: string) => {
+function go(path: string) {
   router.push(path)
 }
 </script>
@@ -45,31 +45,37 @@ const go = (path: string) => {
 <template>
   <div class="px-4 py-6 pb-24">
     <!-- Header Section -->
-    <header class="text-center mb-10 fade-in">
-      <div class="inline-block p-4 rounded-full bg-blue-500/10 mb-4">
+    <header class="fade-in mb-10 text-center">
+      <div class="mb-4 p-4 rounded-full bg-blue-500/10 inline-block">
         <div class="i-carbon-rocket text-5xl text-blue-500" />
       </div>
-      <h1 class="text-2xl font-bold mb-2 dark:text-white text-gray-800">MyOrg Monorepo</h1>
-      <p class="text-gray-400 text-sm">
+      <h1 class="text-2xl text-gray-800 font-bold mb-2 dark:text-white">
+        MyOrg Monorepo
+      </h1>
+      <p class="text-sm text-gray-400">
         Vue 3.5 + Vite 7 + UnoCSS + Vant 4
       </p>
     </header>
 
     <!-- Features Grid -->
-    <div class="grid gap-4">
+    <div class="gap-4 grid">
       <div
         v-for="(feature, index) in features"
         :key="index"
-        class="bg-white dark:bg-white/5 backdrop-blur-md border border-gray-100 dark:border-white/10 rounded-xl p-4 flex items-center gap-4 fade-in shadow-sm cursor-pointer active:scale-95 transition-transform"
+        class="fade-in p-4 border border-gray-100 rounded-xl bg-white flex gap-4 cursor-pointer shadow-sm transition-transform items-center backdrop-blur-md dark:border-white/10 dark:bg-white/5 active:scale-95"
         :style="{ animationDelay: `${index * 0.1}s` }"
         @click="go(feature.route)"
       >
         <div :class="[feature.icon, feature.color]" class="text-3xl shrink-0" />
         <div>
-          <h3 class="font-semibold dark:text-white text-gray-800">{{ feature.title }}</h3>
-          <p class="text-xs text-gray-500 mt-1">{{ feature.description }}</p>
+          <h3 class="text-gray-800 font-semibold dark:text-white">
+            {{ feature.title }}
+          </h3>
+          <p class="text-xs text-gray-500 mt-1">
+            {{ feature.description }}
+          </p>
         </div>
-        <div class="ml-auto i-carbon-chevron-right text-gray-400" />
+        <div class="i-carbon-chevron-right text-gray-400 ml-auto" />
       </div>
     </div>
 
@@ -79,14 +85,24 @@ const go = (path: string) => {
         Vant 4 集成状态
       </van-divider>
       <div class="flex flex-wrap gap-2">
-        <van-tag type="primary" plain>自动路由</van-tag>
-        <van-tag type="success" plain>Pinia</van-tag>
-        <van-tag type="warning" plain>UnoCSS</van-tag>
+        <van-tag type="primary" plain>
+          自动路由
+        </van-tag>
+        <van-tag type="success" plain>
+          Pinia
+        </van-tag>
+        <van-tag type="warning" plain>
+          UnoCSS
+        </van-tag>
       </div>
 
       <div class="mt-4 flex gap-4">
-        <van-button type="primary" block class="shadow-lg shadow-blue-500/30">主要按钮</van-button>
-        <van-button plain block>次要按钮</van-button>
+        <van-button type="primary" block class="shadow-blue-500/30 shadow-lg">
+          主要按钮
+        </van-button>
+        <van-button plain block>
+          次要按钮
+        </van-button>
       </div>
     </div>
   </div>
@@ -98,7 +114,13 @@ const go = (path: string) => {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 </style>

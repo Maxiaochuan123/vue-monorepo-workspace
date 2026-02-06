@@ -9,14 +9,14 @@ export function isPhone(value: string): boolean {
  * 验证邮箱
  */
 export function isEmail(value: string): boolean {
-  return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value)
+  return /^[\w.%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i.test(value)
 }
 
 /**
  * 验证身份证号
  */
 export function isIdCard(value: string): boolean {
-  return /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/.test(value)
+  return /^(?:\d{15}|\d{17}[\dx])$/i.test(value)
 }
 
 /**
@@ -24,9 +24,10 @@ export function isIdCard(value: string): boolean {
  */
 export function isUrl(value: string): boolean {
   try {
-    new URL(value)
+    void new URL(value)
     return true
-  } catch {
+  }
+  catch {
     return false
   }
 }
@@ -35,10 +36,14 @@ export function isUrl(value: string): boolean {
  * 是否为空值
  */
 export function isEmpty(value: unknown): boolean {
-  if (value === null || value === undefined) return true
-  if (typeof value === 'string') return value.trim() === ''
-  if (Array.isArray(value)) return value.length === 0
-  if (typeof value === 'object') return Object.keys(value).length === 0
+  if (value === null || value === undefined)
+    return true
+  if (typeof value === 'string')
+    return value.trim() === ''
+  if (Array.isArray(value))
+    return value.length === 0
+  if (typeof value === 'object')
+    return Object.keys(value).length === 0
   return false
 }
 
@@ -53,7 +58,7 @@ export function createValidator(rules: {
   max?: number
   validator?: (value: unknown) => boolean | Promise<boolean>
 }) {
-  return async (value: unknown): Promise<{ valid: boolean; message?: string }> => {
+  return async (value: unknown): Promise<{ valid: boolean, message?: string }> => {
     // 必填检查
     if (rules.required && isEmpty(value)) {
       return { valid: false, message: rules.message || '此项为必填项' }

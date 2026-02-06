@@ -18,7 +18,7 @@ export function createRequest(defaultConfig: RequestConfig = {}) {
 
   async function request<T>(
     url: string,
-    config: RequestConfig = {}
+    config: RequestConfig = {},
   ): Promise<ApiResponse<T>> {
     const { params, timeout: reqTimeout, ...init } = { ...defaultInit, ...config }
 
@@ -55,7 +55,8 @@ export function createRequest(defaultConfig: RequestConfig = {}) {
       }
 
       return await response.json()
-    } catch (error) {
+    }
+    catch (error) {
       clearTimeout(timeoutId)
       if (error instanceof Error && error.name === 'AbortError') {
         throw new Error('请求超时')

@@ -77,12 +77,14 @@ pnpm build
 
 ```vue
 <script setup lang="ts">
-import { BaseButton, BaseCard } from "@myorg/shared/components";
+import { BaseButton, BaseCard } from '@myorg/shared/components'
 </script>
 
 <template>
   <BaseCard title="卡片标题">
-    <BaseButton type="primary">点击</BaseButton>
+    <BaseButton type="primary">
+      点击
+    </BaseButton>
   </BaseCard>
 </template>
 ```
@@ -91,21 +93,21 @@ import { BaseButton, BaseCard } from "@myorg/shared/components";
 
 ```vue
 <script setup lang="ts">
-import { useLoading, useRequest, useStorage } from "@myorg/shared/composables";
+import { useLoading, useRequest, useStorage } from '@myorg/shared/composables'
 
-const { loading, withLoading } = useLoading();
-const theme = useStorage("theme", "light");
+const { loading, withLoading } = useLoading()
+const theme = useStorage('theme', 'light')
 </script>
 ```
 
 ### 使用 Utils
 
 ```typescript
-import { formatDate, formatMoney, isPhone, isEmail } from "@myorg/shared/utils";
+import { formatDate, formatMoney, isEmail, isPhone } from '@myorg/shared/utils'
 
-formatDate(new Date()); // 2024-01-15 10:30:00
-formatMoney(1234567); // ¥12,345.67
-isPhone("13812345678"); // true
+formatDate(new Date()) // 2024-01-15 10:30:00
+formatMoney(1234567) // ¥12,345.67
+isPhone('13812345678') // true
 ```
 
 ## 🧩 共享包内容

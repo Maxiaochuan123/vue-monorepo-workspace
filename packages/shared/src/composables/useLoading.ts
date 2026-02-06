@@ -26,7 +26,8 @@ export function useLoading(initialValue = false) {
     startLoading()
     try {
       return await fn()
-    } finally {
+    }
+    finally {
       stopLoading()
     }
   }

@@ -1,8 +1,8 @@
 {
   "name": "@myorg/shared",
+  "type": "module",
   "version": "1.0.0",
   "private": true,
-  "type": "module",
   "exports": {
     ".": "./src/index.ts",
     "./components": "./src/components/index.ts",
@@ -14,12 +14,12 @@
     "typecheck": "vue-tsc --noEmit"
   },
   "dependencies": {
-    "vue": "catalog:",
-    "vant": "catalog:mobile",
     "@vueuse/core": "catalog:",
     "axios": "catalog:",
+    "dayjs": "catalog:",
     "lodash-es": "catalog:",
-    "dayjs": "^1.11.10"
+    "vant": "catalog:mobile",
+    "vue": "catalog:"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "catalog:build",

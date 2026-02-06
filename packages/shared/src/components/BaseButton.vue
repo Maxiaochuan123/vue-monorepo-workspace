@@ -39,7 +39,7 @@ const buttonClass = computed(() => [
   props.customClass,
 ])
 
-const handleClick = (event: MouseEvent) => {
+function handleClick(event: MouseEvent) {
   if (!props.disabled && !props.loading) {
     emit('click', event)
   }

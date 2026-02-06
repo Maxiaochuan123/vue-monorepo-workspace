@@ -20,6 +20,9 @@ export default antfu(
   {
     ignores: [
       '.github/**',
+      'dist/**',
+      'node_modules/**',
+      '.turbo/**',
     ],
   },
 )

@@ -2,7 +2,12 @@
   "name": "vue-monorepo-workspace",
   "version": "1.0.0",
   "private": true,
+  "packageManager": "pnpm@9.15.9",
   "description": "Vue 3 Monorepo with shared components, utils and composables",
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
+  },
   "scripts": {
     "dev": "turbo dev",
     "dev:app": "turbo dev --filter @myorg/app",
@@ -10,22 +15,31 @@
     "build:shared": "turbo build --filter @myorg/shared",
     "build:app": "turbo build --filter @myorg/app",
     "lint": "turbo lint",
+    "lint:all": "eslint . --cache",
     "clean": "turbo clean && rimraf node_modules",
     "change": "changeset",
     "version": "changeset version",
-    "release": "changeset publish"
+    "release": "changeset publish",
+    "prepare": "husky"
   },
-  "engines": {
-    "node": ">=18.0.0",
-    "pnpm": ">=8.0.0"
-  },
-  "packageManager": "pnpm@9.15.9",
   "devDependencies": {
+    "@antfu/eslint-config": "catalog:build",
     "@changesets/cli": "catalog:build",
-    "@types/node": "catalog:build",
-    "turbo": "catalog:build",
     "@commitlint/cli": "catalog:build",
     "@commitlint/config-conventional": "catalog:build",
-    "@commitlint/types": "catalog:build"
+    "@commitlint/types": "catalog:build",
+    "@types/node": "catalog:build",
+    "@unocss/eslint-config": "catalog:build",
+    "eslint": "catalog:build",
+    "eslint-plugin-format": "catalog:build",
+    "husky": "catalog:build",
+    "lint-staged": "catalog:build",
+    "turbo": "catalog:build",
+    "unocss": "catalog:"
+  },
+  "lint-staged": {
+    "**/*.{js,jsx,ts,tsx,vue,json,md,yaml}": [
+      "eslint --fix"
+    ]
   }
 }

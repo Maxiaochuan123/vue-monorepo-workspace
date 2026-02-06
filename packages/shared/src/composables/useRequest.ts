@@ -1,4 +1,5 @@
-import { ref, shallowRef, type Ref, type ShallowRef } from 'vue'
+import { ref, shallowRef } from 'vue'
+import type { Ref, ShallowRef } from 'vue'
 import { useLoading } from './useLoading'
 
 export interface UseRequestOptions<T> {
@@ -25,7 +26,7 @@ export interface UseRequestReturn<T, P extends unknown[]> {
  */
 export function useRequest<T, P extends unknown[] = unknown[]>(
   requestFn: (...args: P) => Promise<T>,
-  options: UseRequestOptions<T> = {}
+  options: UseRequestOptions<T> = {},
 ): UseRequestReturn<T, P> {
   const { initialData, immediate = false, onSuccess, onError } = options
 
@@ -40,7 +41,8 @@ export function useRequest<T, P extends unknown[] = unknown[]>(
       data.value = result
       onSuccess?.(result)
       return result
-    } catch (e) {
+    }
+    catch (e) {
       const err = e instanceof Error ? e : new Error(String(e))
       error.value = err
       onError?.(err)

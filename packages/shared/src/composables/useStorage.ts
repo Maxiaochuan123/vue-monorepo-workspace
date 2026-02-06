@@ -1,4 +1,5 @@
-import { ref, watch, type Ref } from 'vue'
+import { ref, watch } from 'vue'
+import type { Ref } from 'vue'
 
 export interface UseStorageOptions<T> {
   /** 存储类型 */
@@ -19,7 +20,7 @@ export interface UseStorageOptions<T> {
 export function useStorage<T>(
   key: string,
   defaultValue: T,
-  options: UseStorageOptions<T> = {}
+  options: UseStorageOptions<T> = {},
 ): Ref<T> {
   const {
     storage = 'local',
@@ -35,7 +36,8 @@ export function useStorage<T>(
     try {
       const item = storageApi.getItem(key)
       return item ? serializer.read(item) : defaultValue
-    } catch {
+    }
+    catch {
       return defaultValue
     }
   }
@@ -48,14 +50,16 @@ export function useStorage<T>(
       try {
         if (newValue === null || newValue === undefined) {
           storageApi.removeItem(key)
-        } else {
+        }
+        else {
           storageApi.setItem(key, serializer.write(newValue))
         }
-      } catch (e) {
+      }
+      catch (e) {
         console.warn(`Failed to save to ${storage}Storage:`, e)
       }
     },
-    { deep: true }
+    { deep: true },
   )
 
   return data

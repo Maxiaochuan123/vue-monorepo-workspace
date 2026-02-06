@@ -5,10 +5,10 @@
  */
 export function formatDate(
   date: Date | number | string,
-  format = 'YYYY-MM-DD HH:mm:ss'
+  format = 'YYYY-MM-DD HH:mm:ss',
 ): string {
   const d = new Date(date)
-  if (isNaN(d.getTime())) {
+  if (Number.isNaN(d.getTime())) {
     return ''
   }
 
@@ -31,6 +31,9 @@ export function formatDate(
  * 格式化金额
  * @param amount - 金额（分）
  * @param options - 配置选项
+ * @param options.decimal - 小数位数
+ * @param options.symbol - 货币符号
+ * @param options.thousandSeparator - 是否显示千分位分隔符
  */
 export function formatMoney(
   amount: number,
@@ -38,14 +41,14 @@ export function formatMoney(
     decimal?: number
     symbol?: string
     thousandSeparator?: boolean
-  } = {}
+  } = {},
 ): string {
   const { decimal = 2, symbol = '¥', thousandSeparator = true } = options
-  
+
   // 分转元
   const yuan = amount / 100
   let formatted = yuan.toFixed(decimal)
-  
+
   if (thousandSeparator) {
     const [intPart, decPart] = formatted.split('.')
     formatted = intPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
@@ -53,7 +56,7 @@ export function formatMoney(
       formatted += `.${decPart}`
     }
   }
-  
+
   return `${symbol}${formatted}`
 }
 
@@ -62,13 +65,14 @@ export function formatMoney(
  * @param bytes - 字节数
  */
 export function formatFileSize(bytes: number): string {
-  if (bytes === 0) return '0 B'
-  
+  if (bytes === 0)
+    return '0 B'
+
   const units = ['B', 'KB', 'MB', 'GB', 'TB']
   const k = 1024
   const i = Math.floor(Math.log(bytes) / Math.log(k))
-  
-  return `${(bytes / Math.pow(k, i)).toFixed(2)} ${units[i]}`
+
+  return `${(bytes / k ** i).toFixed(2)} ${units[i]}`
 }
 
 /**

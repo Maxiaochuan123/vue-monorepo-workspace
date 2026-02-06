@@ -2,11 +2,11 @@
 import { BaseCard } from '@myorg/shared/components'
 import {
   formatDate,
-  formatMoney,
   formatFileSize,
-  maskPhone,
-  isPhone,
+  formatMoney,
   isEmail,
+  isPhone,
+  maskPhone,
 } from '@myorg/shared/utils'
 
 // ========== 格式化演示 ==========
@@ -27,8 +27,12 @@ const emailValid = computed(() => isEmail(testEmail.value))
   <div class="utils-demo">
     <!-- 格式化工具演示 -->
     <div class="demo-card fade-in">
-      <h3 class="demo-card__title">格式化工具 format</h3>
-      <p class="demo-desc">日期、金额、文件大小、手机号等格式化</p>
+      <h3 class="demo-card__title">
+        格式化工具 format
+      </h3>
+      <p class="demo-desc">
+        日期、金额、文件大小、手机号等格式化
+      </p>
 
       <div class="format-list">
         <div class="format-item">
@@ -61,8 +65,12 @@ formatMoney(1234567)   // ¥12,345.67</code></pre>
 
     <!-- 验证工具演示 -->
     <div class="demo-card fade-in" style="animation-delay: 0.1s">
-      <h3 class="demo-card__title">验证工具 validate</h3>
-      <p class="demo-desc">手机号、邮箱、身份证等常用验证</p>
+      <h3 class="demo-card__title">
+        验证工具 validate
+      </h3>
+      <p class="demo-desc">
+        手机号、邮箱、身份证等常用验证
+      </p>
 
       <div class="validate-group">
         <van-field
@@ -74,7 +82,7 @@ formatMoney(1234567)   // ¥12,345.67</code></pre>
         />
         <div class="validate-result">
           <span>isPhone 验证结果:</span>
-          <span :class="['tag', phoneValid ? 'tag-success' : 'tag-error']">
+          <span class="tag" :class="[phoneValid ? 'tag-success' : 'tag-error']">
             {{ phoneValid ? '✓ 有效' : '✗ 无效' }}
           </span>
         </div>
@@ -90,7 +98,7 @@ formatMoney(1234567)   // ¥12,345.67</code></pre>
         />
         <div class="validate-result">
           <span>isEmail 验证结果:</span>
-          <span :class="['tag', emailValid ? 'tag-success' : 'tag-error']">
+          <span class="tag" :class="[emailValid ? 'tag-success' : 'tag-error']">
             {{ emailValid ? '✓ 有效' : '✗ 无效' }}
           </span>
         </div>
@@ -105,8 +113,12 @@ isEmpty('') // true</code></pre>
 
     <!-- 存储工具演示 -->
     <div class="demo-card fade-in" style="animation-delay: 0.2s">
-      <h3 class="demo-card__title">存储工具 storage</h3>
-      <p class="demo-desc">localStorage / sessionStorage 封装，带前缀管理</p>
+      <h3 class="demo-card__title">
+        存储工具 storage
+      </h3>
+      <p class="demo-desc">
+        localStorage / sessionStorage 封装，带前缀管理
+      </p>
 
       <BaseCard>
         <div class="storage-info">
@@ -125,15 +137,27 @@ const user = getStorage('user')
 
     <!-- 请求工具演示 -->
     <div class="demo-card fade-in" style="animation-delay: 0.3s">
-      <h3 class="demo-card__title">请求工具 request</h3>
-      <p class="demo-desc">基于 fetch 封装，支持超时、拦截器等</p>
+      <h3 class="demo-card__title">
+        请求工具 request
+      </h3>
+      <p class="demo-desc">
+        基于 fetch 封装，支持超时、拦截器等
+      </p>
 
       <BaseCard>
         <div class="request-features">
-          <div class="feature-tag">✓ 超时控制</div>
-          <div class="feature-tag">✓ 请求拦截</div>
-          <div class="feature-tag">✓ JSON 自动解析</div>
-          <div class="feature-tag">✓ 错误处理</div>
+          <div class="feature-tag">
+            ✓ 超时控制
+          </div>
+          <div class="feature-tag">
+            ✓ 请求拦截
+          </div>
+          <div class="feature-tag">
+            ✓ JSON 自动解析
+          </div>
+          <div class="feature-tag">
+            ✓ 错误处理
+          </div>
         </div>
       </BaseCard>
 

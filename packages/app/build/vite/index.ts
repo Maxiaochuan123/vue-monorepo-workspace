@@ -7,11 +7,12 @@ import Components from 'unplugin-vue-components/vite'
 import { VueRouterAutoImports } from 'vue-router/unplugin'
 import VueRouter from 'vue-router/vite'
 import VueDevTools from 'vite-plugin-vue-devtools'
+import process from 'node:process'
 import { loadEnv } from 'vite'
 import { createViteVConsole } from './vconsole'
 
 export function createVitePlugins(mode: string) {
-  const env = loadEnv(mode, process.cwd())
+  const _env = loadEnv(mode, process.cwd())
 
   return [
     VueRouter({

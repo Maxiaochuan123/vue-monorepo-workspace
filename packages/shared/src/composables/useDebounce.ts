@@ -1,11 +1,12 @@
-import { ref, watch, type Ref } from 'vue'
+import { ref, watch } from 'vue'
+import type { Ref } from 'vue'
 
 /**
  * 防抖 composable
  * @example
  * const keyword = ref('')
  * const debouncedKeyword = useDebounce(keyword, 300)
- * 
+ *
  * watch(debouncedKeyword, (val) => {
  *   // 搜索逻辑
  * })
@@ -35,7 +36,7 @@ export function useDebounce<T>(value: Ref<T>, delay = 200): Ref<T> {
  */
 export function useDebounceFn<T extends (...args: any[]) => any>(
   fn: T,
-  delay = 200
+  delay = 200,
 ): (...args: Parameters<T>) => void {
   let timer: ReturnType<typeof setTimeout> | null = null
 

@@ -1,46 +1,60 @@
 <script setup lang="ts">
 // import { ref } from "vue";
-import { BaseButton, BaseCard, LoadingOverlay } from "@myorg/shared/components";
-import { showToast } from "vant";
+import { BaseButton, BaseCard, LoadingOverlay } from '@myorg/shared/components'
+import { showToast } from 'vant'
 
-const loading = ref(false);
-const buttonLoading = ref(false);
+const loading = ref(false)
+const buttonLoading = ref(false)
 
-const handleClick = () => {
-  showToast("按钮被点击了！");
-};
+function handleClick() {
+  showToast('按钮被点击了！')
+}
 
-const handleLoadingClick = async () => {
-  buttonLoading.value = true;
-  await new Promise((resolve) => setTimeout(resolve, 2000));
-  buttonLoading.value = false;
-  showToast("加载完成！");
-};
+async function handleLoadingClick() {
+  buttonLoading.value = true
+  await new Promise(resolve => setTimeout(resolve, 2000))
+  buttonLoading.value = false
+  showToast('加载完成！')
+}
 
-const toggleOverlay = () => {
-  loading.value = true;
+function toggleOverlay() {
+  loading.value = true
   setTimeout(() => {
-    loading.value = false;
-  }, 2000);
-};
+    loading.value = false
+  }, 2000)
+}
 </script>
 
 <template>
   <div class="components-demo">
     <!-- BaseButton 演示 -->
     <div class="demo-card fade-in">
-      <h3 class="demo-card__title">BaseButton 按钮</h3>
-      <p class="demo-desc">封装 Vant Button，提供统一的按钮样式</p>
+      <h3 class="demo-card__title">
+        BaseButton 按钮
+      </h3>
+      <p class="demo-desc">
+        封装 Vant Button，提供统一的按钮样式
+      </p>
 
       <div class="button-group">
-        <BaseButton type="primary" @click="handleClick">主要按钮</BaseButton>
-        <BaseButton type="success">成功按钮</BaseButton>
-        <BaseButton type="warning">警告按钮</BaseButton>
-        <BaseButton type="danger">危险按钮</BaseButton>
+        <BaseButton type="primary" @click="handleClick">
+          主要按钮
+        </BaseButton>
+        <BaseButton type="success">
+          成功按钮
+        </BaseButton>
+        <BaseButton type="warning">
+          警告按钮
+        </BaseButton>
+        <BaseButton type="danger">
+          危险按钮
+        </BaseButton>
       </div>
 
       <div class="button-group">
-        <BaseButton type="primary" size="large" block>大号块级按钮</BaseButton>
+        <BaseButton type="primary" size="large" block>
+          大号块级按钮
+        </BaseButton>
       </div>
 
       <div class="button-group">
@@ -51,7 +65,9 @@ const toggleOverlay = () => {
         >
           点击加载
         </BaseButton>
-        <BaseButton type="primary" disabled>禁用状态</BaseButton>
+        <BaseButton type="primary" disabled>
+          禁用状态
+        </BaseButton>
       </div>
 
       <pre
@@ -65,8 +81,12 @@ const toggleOverlay = () => {
 
     <!-- BaseCard 演示 -->
     <div class="demo-card fade-in" style="animation-delay: 0.1s">
-      <h3 class="demo-card__title">BaseCard 卡片</h3>
-      <p class="demo-desc">通用卡片组件，支持标题、描述、插槽等</p>
+      <h3 class="demo-card__title">
+        BaseCard 卡片
+      </h3>
+      <p class="demo-desc">
+        通用卡片组件，支持标题、描述、插槽等
+      </p>
 
       <BaseCard
         title="带标题的卡片"
@@ -85,7 +105,9 @@ const toggleOverlay = () => {
         </template>
         <p>使用插槽自定义卡片头部内容</p>
         <template #footer>
-          <BaseButton type="primary" size="small">操作按钮</BaseButton>
+          <BaseButton type="primary" size="small">
+            操作按钮
+          </BaseButton>
         </template>
       </BaseCard>
 
@@ -100,8 +122,12 @@ const toggleOverlay = () => {
 
     <!-- LoadingOverlay 演示 -->
     <div class="demo-card fade-in" style="animation-delay: 0.2s">
-      <h3 class="demo-card__title">LoadingOverlay 加载遮罩</h3>
-      <p class="demo-desc">全屏或局部加载遮罩组件</p>
+      <h3 class="demo-card__title">
+        LoadingOverlay 加载遮罩
+      </h3>
+      <p class="demo-desc">
+        全屏或局部加载遮罩组件
+      </p>
 
       <BaseButton type="primary" @click="toggleOverlay">
         显示加载遮罩（2秒）

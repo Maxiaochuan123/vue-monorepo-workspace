@@ -7,7 +7,8 @@ export function getStorage<T>(key: string, defaultValue?: T): T | undefined {
   try {
     const item = localStorage.getItem(`${PREFIX}${key}`)
     return item ? JSON.parse(item) : defaultValue
-  } catch {
+  }
+  catch {
     return defaultValue
   }
 }
@@ -18,7 +19,8 @@ export function getStorage<T>(key: string, defaultValue?: T): T | undefined {
 export function setStorage<T>(key: string, value: T): void {
   try {
     localStorage.setItem(`${PREFIX}${key}`, JSON.stringify(value))
-  } catch (e) {
+  }
+  catch (e) {
     console.warn('Failed to set localStorage:', e)
   }
 }
@@ -49,7 +51,8 @@ export function getSession<T>(key: string, defaultValue?: T): T | undefined {
   try {
     const item = sessionStorage.getItem(`${PREFIX}${key}`)
     return item ? JSON.parse(item) : defaultValue
-  } catch {
+  }
+  catch {
     return defaultValue
   }
 }
@@ -60,7 +63,8 @@ export function getSession<T>(key: string, defaultValue?: T): T | undefined {
 export function setSession<T>(key: string, value: T): void {
   try {
     sessionStorage.setItem(`${PREFIX}${key}`, JSON.stringify(value))
-  } catch (e) {
+  }
+  catch (e) {
     console.warn('Failed to set sessionStorage:', e)
   }
 }

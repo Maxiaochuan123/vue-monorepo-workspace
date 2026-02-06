@@ -41,8 +41,12 @@ const cardClass = computed(() => [
   <div :class="cardClass">
     <div v-if="title || $slots.header" class="base-card__header">
       <slot name="header">
-        <h3 v-if="title" class="base-card__title">{{ title }}</h3>
-        <p v-if="description" class="base-card__description">{{ description }}</p>
+        <h3 v-if="title" class="base-card__title">
+          {{ title }}
+        </h3>
+        <p v-if="description" class="base-card__description">
+          {{ description }}
+        </p>
       </slot>
     </div>
     <div class="base-card__body">

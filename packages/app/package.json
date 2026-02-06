@@ -24,17 +24,14 @@
     "vue-router": "catalog:"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "catalog:build",
     "@iconify-json/carbon": "catalog:build",
     "@types/lodash-es": "catalog:",
     "@types/node": "catalog:build",
-    "@unocss/eslint-config": "catalog:build",
     "@vant/auto-import-resolver": "catalog:build",
     "@vitejs/plugin-legacy": "catalog:build",
     "@vitejs/plugin-vue": "catalog:build",
     "autoprefixer": "catalog:build",
     "cross-env": "catalog:build",
-    "eslint": "catalog:build",
     "less": "catalog:build",
     "postcss-mobile-forever": "catalog:mobile",
     "typescript": "catalog:build",
