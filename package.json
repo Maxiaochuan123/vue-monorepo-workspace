@@ -23,6 +23,9 @@
   "devDependencies": {
     "@changesets/cli": "catalog:build",
     "@types/node": "catalog:build",
-    "turbo": "catalog:build"
+    "turbo": "catalog:build",
+    "@commitlint/cli": "catalog:build",
+    "@commitlint/config-conventional": "catalog:build",
+    "@commitlint/types": "catalog:build"
   }
 }
