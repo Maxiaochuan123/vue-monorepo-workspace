@@ -6,11 +6,9 @@
   "scripts": {
     "dev": "turbo dev",
     "dev:app": "turbo dev --filter @myorg/app",
-    "dev:admin": "turbo dev --filter @myorg/app-admin",
     "build": "turbo build",
     "build:shared": "turbo build --filter @myorg/shared",
     "build:app": "turbo build --filter @myorg/app",
-    "build:admin": "turbo build --filter @myorg/app-admin",
     "lint": "turbo lint",
     "clean": "turbo clean && rimraf node_modules",
     "change": "changeset",
