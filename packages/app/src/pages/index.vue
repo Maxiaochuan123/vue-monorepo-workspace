@@ -1,5 +1,10 @@
+<route lang="json5">
+{
+  name: '首页'
+}
+</route>
+
 <script setup lang="ts">
-// 💡 无需 import { ref, onMounted } ... 插件已自动全局注入
 const features = [
   {
     icon: 'i-carbon-box',

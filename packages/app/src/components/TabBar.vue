@@ -1,19 +1,9 @@
 <script setup lang="ts">
-import { rootRouteList } from '@/config/routes'
-
 const active = ref(0)
-const route = useRoute()
-
-const show = computed(() => {
-  if (route.name && rootRouteList.includes(route.name)) {
-    return true
-  }
-  return false
-})
 </script>
 
 <template>
-  <van-tabbar v-if="show" v-model="active" route placeholder>
+  <van-tabbar v-model="active" route placeholder>
     <van-tabbar-item replace to="/">
       home
       <template #icon>
