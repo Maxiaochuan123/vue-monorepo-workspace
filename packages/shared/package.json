@@ -1,55 +1,31 @@
 {
   "name": "@myorg/shared",
   "version": "1.0.0",
-  "description": "Shared Vue components, composables and utils",
+  "private": true,
   "type": "module",
-  "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
   "exports": {
-    ".": {
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.js",
-      "types": "./dist/index.d.ts"
-    },
-    "./components": {
-      "import": "./dist/components/index.mjs",
-      "require": "./dist/components/index.js",
-      "types": "./dist/components/index.d.ts"
-    },
-    "./composables": {
-      "import": "./dist/composables/index.mjs",
-      "require": "./dist/composables/index.js",
-      "types": "./dist/composables/index.d.ts"
-    },
-    "./utils": {
-      "import": "./dist/utils/index.mjs",
-      "require": "./dist/utils/index.js",
-      "types": "./dist/utils/index.d.ts"
-    },
-    "./styles": "./dist/styles/index.css"
+    ".": "./src/index.ts",
+    "./components": "./src/components/index.ts",
+    "./composables": "./src/composables/index.ts",
+    "./utils": "./src/utils/index.ts"
   },
-  "files": [
-    "dist"
-  ],
   "scripts": {
-    "dev": "vite build --watch",
-    "build": "vue-tsc --noEmit && vite build",
-    "clean": "rimraf dist"
+    "build": "vite build",
+    "typecheck": "vue-tsc --noEmit"
   },
-  "peerDependencies": {
+  "dependencies": {
     "vue": "catalog:",
-    "vant": "catalog:"
+    "vant": "catalog:mobile",
+    "@vueuse/core": "catalog:",
+    "axios": "catalog:",
+    "lodash-es": "catalog:",
+    "dayjs": "^1.11.10"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "catalog:",
-    "typescript": "catalog:",
-    "vite": "catalog:",
-    "vite-plugin-dts": "catalog:",
-    "vue": "catalog:",
-    "vue-tsc": "catalog:",
-    "vant": "catalog:",
-    "@vueuse/core": "catalog:",
-    "@vant/use": "catalog:"
+    "@vitejs/plugin-vue": "catalog:build",
+    "typescript": "catalog:build",
+    "vite": "catalog:build",
+    "vite-plugin-dts": "catalog:build",
+    "vue-tsc": "catalog:build"
   }
 }
