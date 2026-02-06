@@ -1,32 +1,46 @@
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
-import Components from 'unplugin-vue-components/vite'
-import { VantResolver } from '@vant/auto-import-resolver'
-import { resolve } from 'path'
+import path from 'node:path'
+import process from 'node:process'
+import { loadEnv } from 'vite'
+import type { ConfigEnv, UserConfig } from 'vite'
+import { createVitePlugins } from './build/vite'
+import { exclude, include } from './build/vite/optimize'
 
-export default defineConfig({
-  plugins: [
-    vue(),
-    Components({
-      resolvers: [VantResolver()],
-    }),
-  ],
-  resolve: {
-    alias: {
-      '@': resolve(__dirname, 'src'),
-      // 开发环境直接引用共享包源码
-      '@myorg/shared/components': resolve(__dirname, '../shared/src/components'),
-      '@myorg/shared/composables': resolve(__dirname, '../shared/src/composables'),
-      '@myorg/shared/utils': resolve(__dirname, '../shared/src/utils'),
-      '@myorg/shared': resolve(__dirname, '../shared/src'),
+export default ({ mode }: ConfigEnv): UserConfig => {
+  const root = process.cwd()
+  const env = loadEnv(mode, root)
+
+  return {
+    base: env.VITE_APP_PUBLIC_PATH,
+    plugins: createVitePlugins(mode),
+
+    server: {
+      host: true,
+      port: 3000,
+      proxy: {
+        '/api': {
+          target: '', // Your backend API base URL
+          ws: false,
+          changeOrigin: true,
+          rewrite: path => path.replace(/^\/api/, ''),
+        },
+      },
     },
-  },
-  server: {
-    port: 3000,
-    host: true,
-  },
-  // 优化依赖预构建
-  optimizeDeps: {
-    include: ['vue', 'vue-router', 'vant'],
-  },
-})
+
+    resolve: {
+      alias: {
+        '@': path.join(__dirname, './src'),
+        '~': path.join(__dirname, './src/assets'),
+        '~root': path.join(__dirname, '.'),
+        '@myorg/shared': path.resolve(__dirname, '../shared/src'),
+      },
+    },
+
+    build: {
+      cssCodeSplit: false,
+      chunkSizeWarningLimit: 2048,
+      outDir: env.VITE_APP_OUT_DIR || 'dist',
+    },
+
+    optimizeDeps: { include, exclude },
+  }
+}

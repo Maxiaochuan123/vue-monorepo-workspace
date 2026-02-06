@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
 import { BaseButton, BaseCard } from '@myorg/shared/components'
 import { useLoading, useRequest, useStorage, useDebounce } from '@myorg/shared/composables'
 import { showToast } from 'vant'
@@ -30,12 +29,12 @@ const mockFetchUsers = async (): Promise<User[]> => {
   ]
 }
 
-const { 
-  data: users, 
-  loading: usersLoading, 
+const {
+  data: users,
+  loading: usersLoading,
   error: usersError,
   run: fetchUsers,
-  refresh: refreshUsers 
+  refresh: refreshUsers
 } = useRequest(mockFetchUsers, {
   onSuccess: () => showToast('获取用户列表成功'),
   onError: (err) => showToast(`错误: ${err.message}`),
@@ -68,9 +67,9 @@ const searchResult = computed(() => {
       <h3 class="demo-card__title">useLoading</h3>
       <p class="demo-desc">加载状态管理，自动包装异步函数</p>
 
-      <BaseButton 
-        type="primary" 
-        :loading="isLoading" 
+      <BaseButton
+        type="primary"
+        :loading="isLoading"
         @click="simulateRequest"
       >
         {{ isLoading ? '处理中...' : '模拟异步请求' }}
@@ -89,9 +88,9 @@ await withLoading(async () => {
       <p class="demo-desc">请求数据管理，自动处理 loading 和 error 状态</p>
 
       <div class="button-group">
-        <BaseButton 
-          type="primary" 
-          :loading="usersLoading" 
+        <BaseButton
+          type="primary"
+          :loading="usersLoading"
           @click="() => fetchUsers()"
         >
           获取用户列表

@@ -1,14 +1,12 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-import { BaseButton, BaseCard } from '@myorg/shared/components'
-import { 
-  formatDate, 
-  formatMoney, 
-  formatFileSize, 
+import { BaseCard } from '@myorg/shared/components'
+import {
+  formatDate,
+  formatMoney,
+  formatFileSize,
   maskPhone,
   isPhone,
   isEmail,
-  isEmpty,
 } from '@myorg/shared/utils'
 
 // ========== 格式化演示 ==========
@@ -23,11 +21,6 @@ const testEmail = ref('test@example.com')
 
 const phoneValid = computed(() => isPhone(testPhone.value))
 const emailValid = computed(() => isEmail(testEmail.value))
-
-// 复制到剪贴板
-const copyCode = (code: string) => {
-  navigator.clipboard.writeText(code)
-}
 </script>
 
 <template>

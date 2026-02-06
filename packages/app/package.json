@@ -1,26 +1,49 @@
 {
   "name": "@myorg/app",
-  "version": "1.0.0",
-  "private": true,
   "type": "module",
+  "version": "1.0.0",
+  "description": "Vue 3 Vant Mobile Template (Integrated)",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
-    "clean": "rimraf dist"
+    "lint": "eslint ."
   },
   "dependencies": {
     "@myorg/shared": "workspace:*",
+    "@vant/touch-emulator": "catalog:",
+    "@vant/use": "catalog:",
+    "@vueuse/core": "catalog:",
+    "axios": "catalog:",
+    "lodash-es": "catalog:",
+    "pinia": "catalog:",
+    "pinia-plugin-persistedstate": "catalog:",
+    "vant": "catalog:",
+    "vconsole": "catalog:",
     "vue": "catalog:",
-    "vue-router": "catalog:",
-    "vant": "catalog:"
+    "vue-router": "catalog:"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "catalog:",
+    "@antfu/eslint-config": "catalog:",
+    "@iconify-json/carbon": "catalog:",
+    "@types/lodash-es": "catalog:",
+    "@types/node": "catalog:",
+    "@unocss/eslint-config": "catalog:",
     "@vant/auto-import-resolver": "catalog:",
+    "@vitejs/plugin-legacy": "catalog:",
+    "@vitejs/plugin-vue": "catalog:",
+    "autoprefixer": "catalog:",
+    "cross-env": "catalog:",
+    "eslint": "catalog:",
+    "less": "catalog:",
+    "postcss-mobile-forever": "catalog:",
     "typescript": "catalog:",
+    "unocss": "catalog:",
+    "unplugin-auto-import": "catalog:",
     "unplugin-vue-components": "catalog:",
     "vite": "catalog:",
+    "vite-plugin-vconsole": "catalog:",
+    "vite-plugin-vue-devtools": "catalog:",
     "vue-tsc": "catalog:"
   }
 }

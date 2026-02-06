@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+// import { ref } from "vue";
 import { BaseButton, BaseCard, LoadingOverlay } from "@myorg/shared/components";
 import { showToast } from "vant";
 
@@ -111,10 +111,10 @@ const toggleOverlay = () => {
         class="code-block"
       ><code>import { LoadingOverlay } from '@myorg/shared/components'
 
-&lt;LoadingOverlay 
-  :show="loading" 
-  text="加载中..." 
-  fullscreen 
+&lt;LoadingOverlay
+  :show="loading"
+  text="加载中..."
+  fullscreen
 /&gt;</code></pre>
     </div>
 
