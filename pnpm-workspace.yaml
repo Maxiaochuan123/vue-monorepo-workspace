@@ -1,2 +1,24 @@
 packages:
   - "packages/*"
+
+# 中央版本控制：Catalog 模式
+# 修订版本时只需改这里，所有子包自动生效且不产生 git 变更
+catalog:
+  # 框架核心
+  vue: ^3.5.13
+  vue-router: ^4.5.0
+  vant: ^4.9.15
+
+  # 构建工具
+  vite: ^6.0.7
+  typescript: ^5.7.2
+  vue-tsc: ^2.1.10
+  turbo: ^2.3.3
+
+  # 插件
+  "@vitejs/plugin-vue": ^5.2.1
+  "@vant/auto-import-resolver": ^1.2.1
+  unplugin-vue-components: ^0.28.0
+  rimraf: ^5.0.0
+  "@changesets/cli": ^2.29.8
+  "@types/node": ^22.10.2

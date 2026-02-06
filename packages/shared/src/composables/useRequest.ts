@@ -1,4 +1,4 @@
-import { ref, shallowRef } from 'vue'
+import { ref, shallowRef, type Ref, type ShallowRef } from 'vue'
 import { useLoading } from './useLoading'
 
 export interface UseRequestOptions<T> {
@@ -12,18 +12,21 @@ export interface UseRequestOptions<T> {
   onError?: (error: Error) => void
 }
 
+export interface UseRequestReturn<T, P extends unknown[]> {
+  data: ShallowRef<T | undefined>
+  loading: Ref<boolean>
+  error: Ref<Error | null>
+  run: (...args: P) => Promise<T | undefined>
+  refresh: () => Promise<T | undefined>
+}
+
 /**
  * 请求管理 composable
- * @example
- * const { data, loading, error, run, refresh } = useRequest(fetchUserList, {
- *   immediate: true,
- *   onSuccess: (data) => console.log('获取成功', data)
- * })
  */
 export function useRequest<T, P extends unknown[] = unknown[]>(
   requestFn: (...args: P) => Promise<T>,
   options: UseRequestOptions<T> = {}
-) {
+): UseRequestReturn<T, P> {
   const { initialData, immediate = false, onSuccess, onError } = options
 
   const data = shallowRef<T | undefined>(initialData)
