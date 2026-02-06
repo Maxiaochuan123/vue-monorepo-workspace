@@ -6,7 +6,6 @@ import { VantResolver } from '@vant/auto-import-resolver'
 import Components from 'unplugin-vue-components/vite'
 import { VueRouterAutoImports } from 'vue-router/unplugin'
 import VueRouter from 'vue-router/vite'
-import { mockDevServerPlugin } from 'vite-plugin-mock-dev-server'
 import VueDevTools from 'vite-plugin-vue-devtools'
 import { loadEnv } from 'vite'
 import { createViteVConsole } from './vconsole'
@@ -22,9 +21,6 @@ export function createVitePlugins(mode: string) {
     }),
 
     vue(),
-
-    // https://github.com/pengzhanbo/vite-plugin-mock-dev-server
-    mockDevServerPlugin(),
 
     // https://github.com/antfu/unplugin-vue-components
     Components({

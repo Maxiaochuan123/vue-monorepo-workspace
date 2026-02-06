@@ -21,8 +21,8 @@
   },
   "packageManager": "pnpm@9.15.9",
   "devDependencies": {
-    "@changesets/cli": "catalog:",
-    "@types/node": "catalog:",
-    "turbo": "catalog:"
+    "@changesets/cli": "catalog:build",
+    "@types/node": "catalog:build",
+    "turbo": "catalog:build"
   }
 }
