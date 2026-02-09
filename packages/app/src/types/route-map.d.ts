@@ -54,6 +54,41 @@ declare module 'vue-router/auto-routes' {
       Record<never, never>,
       | never
     >,
+    'Dialog': RouteRecordInfo<
+      'Dialog',
+      '/example/dialog',
+      Record<never, never>,
+      Record<never, never>,
+      | never
+    >,
+    '/example/dialog/components/ActionSheetDialog': RouteRecordInfo<
+      '/example/dialog/components/ActionSheetDialog',
+      '/example/dialog/components/ActionSheetDialog',
+      Record<never, never>,
+      Record<never, never>,
+      | never
+    >,
+    '/example/dialog/components/ConfirmDialog': RouteRecordInfo<
+      '/example/dialog/components/ConfirmDialog',
+      '/example/dialog/components/ConfirmDialog',
+      Record<never, never>,
+      Record<never, never>,
+      | never
+    >,
+    '/example/dialog/components/FormDialog': RouteRecordInfo<
+      '/example/dialog/components/FormDialog',
+      '/example/dialog/components/FormDialog',
+      Record<never, never>,
+      Record<never, never>,
+      | never
+    >,
+    '/example/dialog/components/ToastDialog': RouteRecordInfo<
+      '/example/dialog/components/ToastDialog',
+      '/example/dialog/components/ToastDialog',
+      Record<never, never>,
+      Record<never, never>,
+      | never
+    >,
     '/utils': RouteRecordInfo<
       '/utils',
       '/utils',
@@ -95,6 +130,36 @@ declare module 'vue-router/auto-routes' {
     'src/pages/composables.vue': {
       routes:
         | '/composables'
+      views:
+        | never
+    }
+    'src/pages/example/dialog/index.vue': {
+      routes:
+        | 'Dialog'
+      views:
+        | never
+    }
+    'src/pages/example/dialog/components/ActionSheetDialog.vue': {
+      routes:
+        | '/example/dialog/components/ActionSheetDialog'
+      views:
+        | never
+    }
+    'src/pages/example/dialog/components/ConfirmDialog.vue': {
+      routes:
+        | '/example/dialog/components/ConfirmDialog'
+      views:
+        | never
+    }
+    'src/pages/example/dialog/components/FormDialog.vue': {
+      routes:
+        | '/example/dialog/components/FormDialog'
+      views:
+        | never
+    }
+    'src/pages/example/dialog/components/ToastDialog.vue': {
+      routes:
+        | '/example/dialog/components/ToastDialog'
       views:
         | never
     }

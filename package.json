@@ -38,7 +38,7 @@
     "unocss": "catalog:"
   },
   "lint-staged": {
-    "**/*.{js,jsx,ts,tsx,vue,json,md,yaml}": [
+    "**/*.{js,jsx,ts,tsx,vue,json}": [
       "eslint --fix"
     ]
   }

@@ -11,10 +11,14 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    ActionSheetDialog: typeof import('./../components/dialog2/ActionSheetDialog.vue')['default']
+    ConfirmDialog: typeof import('./../components/dialog2/ConfirmDialog.vue')['default']
+    FormDialog: typeof import('./../components/dialog2/FormDialog.vue')['default']
     NavBar: typeof import('./../components/NavBar.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     TabBar: typeof import('./../components/TabBar.vue')['default']
+    ToastDialog: typeof import('./../components/dialog2/ToastDialog.vue')['default']
     VanButton: typeof import('vant/es')['Button']
     VanConfigProvider: typeof import('vant/es')['ConfigProvider']
     VanDivider: typeof import('vant/es')['Divider']
