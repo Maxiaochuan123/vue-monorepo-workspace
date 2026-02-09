@@ -20,7 +20,6 @@ pnpm-debug.log*
 Thumbs.db
 
 # IDEs & Editors
-.vscode
 .idea
 .history
 .claude

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-// import { ref } from "vue";
 import { BaseButton, BaseCard, LoadingOverlay } from '@myorg/shared/components'
 import { showToast } from 'vant'
 

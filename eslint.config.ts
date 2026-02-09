@@ -15,6 +15,7 @@ export default antfu(
       'perfectionist/sort-imports': 'off',
       'perfectionist/sort-exports': 'off',
       'perfectionist/sort-named-exports': 'off',
+      'style/brace-style': ['error', '1tbs', { allowSingleLine: true }],
     },
   },
   {
