@@ -7,6 +7,8 @@ import { useRouteCacheStore, useUserStore } from '@/stores'
 import { isLogin } from '@/utils/auth'
 import setPageTitle from '@/utils/set-page-title'
 
+import { closeAllDialogs } from '@myorg/shared/composables/dialog'
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.VITE_APP_PUBLIC_PATH),
   routes,
@@ -19,6 +21,9 @@ if (import.meta.hot)
 router.beforeEach(async (to: EnhancedRouteLocation) => {
   const routeCacheStore = useRouteCacheStore()
   const userStore = useUserStore()
+
+  // 跳转前关闭所有弹窗
+  closeAllDialogs()
 
   // Route cache
   routeCacheStore.addRoute(to)

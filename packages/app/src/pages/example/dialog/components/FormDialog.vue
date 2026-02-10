@@ -12,8 +12,9 @@ const emit = defineEmits<{
 // 使用 defineModel 简化双向绑定
 const nickname = defineModel<string>('nickname', { default: '' })
 const email = defineModel<string>('email', { default: '' })
-
+// const router = useRouter()
 function handleCustomAction() {
+  // router.push('/help') // 由于注入了上下文 appContext 因此可以跳转
   emit('customAction', 'clicked-help')
 }
 </script>

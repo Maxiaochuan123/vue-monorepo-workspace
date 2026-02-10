@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { BaseButton, BaseCard } from '@myorg/shared/components'
 import { useDebounce, useLoading, useRequest, useStorage } from '@myorg/shared/composables'
-import { showToast } from 'vant'
 
 // ========== useLoading 演示 ==========
 const { loading: isLoading, withLoading } = useLoading()

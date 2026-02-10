@@ -14,117 +14,107 @@ import FormDialog from './components/FormDialog.vue'
 import ToastDialog from './components/ToastDialog.vue'
 import { BaseButton } from '@myorg/shared/components'
 import { closeAllDialogs, useDialog, vModels } from '@myorg/shared/composables'
-import { showToast } from 'vant'
 
 const router = useRouter()
+// 关键：获取当前应用上下文，传递给弹窗以支持插件（如 router, pinia）
+const { appContext } = getCurrentInstance()!
 
-// 双向绑定演示用的响应式数据
-const nickname = ref('User_007')
-const email = ref('user@example.com')
-
-// 1. 基本用法（居中弹窗）
+// 1. 基本用法
 async function handleBasic() {
-  try {
-    const { result } = useDialog(ConfirmDialog, {
-      props: {
-        title: '删除确认',
-        message: '确定要删除这条数据吗？此操作无法撤销。',
-      },
-    })
+  const { action } = await useDialog(ConfirmDialog, {
+    appContext,
+    props: {
+      title: '删除确认',
+      message: '确定要删除这条数据吗？此操作无法撤销。',
+    },
+  })
 
-    const confirmed = await result
-    if (confirmed) {
-      showToast('删除成功')
-    }
-  } catch {
+  if (action === 'confirm') {
+    showToast('删除成功')
+  } else {
     showToast('操作取消')
   }
 }
 
-// 2. 双向绑定示例（使用 vModels 批量绑定）
+// 2. 双向绑定 + 自定义事件（actions 扩展）
+// 双向绑定演示用的响应式数据
+const nickname = ref('User_007')
+const email = ref('user@example.com')
 async function handleForm() {
-  try {
-    const { result } = useDialog(FormDialog, {
-      props: {
-        ...vModels({ nickname, email }), // 批量绑定多个 v-model
-        title: '修改个人信息',
-        onCustomAction: (actionName: string) => {
-          showToast(`触发自定义事件: ${actionName}`)
-        },
-      },
-    })
-
-    await result
-    showToast(`保存成功: ${nickname.value}, ${email.value}`)
-  } catch {
-    // cancelled
-  }
-}
-
-// 3. 底部弹窗（ActionSheet）
-async function handleBottom() {
-  try {
-    const { result } = useDialog(ActionSheetDialog, {
-      position: 'bottom',
-      props: {
-        title: '选择操作',
-        options: ['拍照', '从相册选择', '保存图片'],
-      },
-    })
-
-    const selected = await result
-    showToast(`选择了: ${selected}`)
-  } catch {
-    // cancelled
-  }
-}
-
-// 4. 多弹窗层级测试（自动动画管理）
-function handleMultiple() {
-  const layer1 = useDialog(ConfirmDialog, {
+  const { action, close, data } = await useDialog(FormDialog, {
+    appContext, // 显式传入上下文
+    // 函数式控制：除了 customAction，其他都自动关闭
+    autoClose: action => action !== 'customAction',
     props: {
-      title: '第一层弹窗',
-      message: '点击确定打开第二层',
-      onConfirm: () => openSecondLayer(),
-      onClose: () => {
-        layer1.close()
-        showToast('第一层取消')
-      },
+      ...vModels({ nickname, email }),
+      title: '修改个人信息',
     },
   })
 
-  function openSecondLayer() {
-    const layer2 = useDialog(ConfirmDialog, {
-      props: {
-        title: '第二层弹窗',
-        message: '点击确定打开第三层',
-        onConfirm: () => openThirdLayer(),
-        onClose: () => {
-          layer2.close()
-          showToast('第二层取消，第一层仍在')
-        },
-      },
-    })
+  if (action === 'confirm') {
+    // confirm 自动关闭了，直接提示
+    showToast(`保存成功: ${nickname.value}, ${email.value}`)
+  } else if (action === 'customAction') {
+    // customAction 没关，先提示再手动关
+    showToast(`收到数据: ${data}`)
+    close()
+  }
+}
 
-    function openThirdLayer() {
-      const layer3 = useDialog(ConfirmDialog, {
-        props: {
-          title: '第三层弹窗',
-          message: '确定后三层同时关闭',
-          onConfirm: () => {
-            // 栈顶自动有动画，非栈顶自动瞬间关闭
-            layer3.close()
-            layer2.close()
-            layer1.close()
-            showToast('三层同时关闭')
-          },
-          onClose: () => {
-            layer3.close()
-            showToast('第三层取消，前两层仍在')
-          },
-        },
-      })
-    }
+// 3. 底部弹窗
+async function handleBottom() {
+  const { action, data } = await useDialog(ActionSheetDialog, {
+    position: 'bottom',
+    props: {
+      title: '选择操作',
+      options: ['拍照', '从相册选择', '保存图片'],
+    },
+  })
+
+  if (action === 'confirm') {
+    showToast(`选择了: ${data}`)
+  }
+}
+
+// 4. 多层弹窗堆叠 — autoClose: false，三层同时可见
+// 每个 dialog 可以分散在不同的 hooks 中，组合使用
+async function handleMultiple() {
+  // 第一层（autoClose: false → 确认后弹窗不关闭，留在屏幕上）
+  const d1 = useDialog(ConfirmDialog, {
+    autoClose: false,
+    props: { title: '第一层弹窗', message: '点击确定打开第二层' },
+  })
+  const r1 = await d1
+  if (r1.action !== 'confirm') {
+    closeAllDialogs()
+    showToast(`第一层: ${r1.action}`)
+    return
+  }
+
+  // 第二层（第一层仍可见，第二层叠在上面）
+  const d2 = useDialog(ConfirmDialog, {
+    autoClose: false,
+    props: { title: '第二层弹窗', message: '点击确定打开第三层' },
+  })
+  const r2 = await d2
+  if (r2.action !== 'confirm') {
+    closeAllDialogs()
+    showToast(`第二层: ${r2.action}`)
+    return
+  }
+
+  // 第三层（三层全部可见）
+  const d3 = useDialog(ConfirmDialog, {
+    autoClose: false,
+    props: { title: '第三层弹窗', message: '确定后三层同时关闭' },
+  })
+  const r3 = await d3
+  if (r3.action === 'confirm') {
+    closeAllDialogs()
+    showToast('三层全部确认，已关闭所有')
+  } else {
+    closeAllDialogs()
+    showToast(`第三层: ${r3.action}`)
   }
 }
 
@@ -167,10 +157,10 @@ function handleToastType(type: 'success' | 'warning' | 'error') {
 function handleCloseAll() {
   // 打开多个弹窗
   useDialog(ConfirmDialog, {
-    props: { title: '第一层', message: '点击“关闭所有”按钮' },
+    props: { title: '第一层', message: '点击"关闭所有"按钮' },
   })
   useDialog(ConfirmDialog, {
-    props: { title: '第二层', message: '点击“关闭所有”按钮' },
+    props: { title: '第二层', message: '点击"关闭所有"按钮' },
   })
   useDialog(ConfirmDialog, {
     props: { title: '第三层', message: '点击下方按钮关闭所有' },

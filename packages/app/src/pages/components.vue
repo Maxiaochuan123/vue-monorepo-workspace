@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { BaseButton, BaseCard, LoadingOverlay } from '@myorg/shared/components'
-import { showToast } from 'vant'
 
 const loading = ref(false)
 const buttonLoading = ref(false)
