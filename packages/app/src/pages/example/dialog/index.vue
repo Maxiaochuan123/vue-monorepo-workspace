@@ -15,8 +15,6 @@ import ToastDialog from './components/ToastDialog.vue'
 import { BaseButton } from '@myorg/shared/components'
 import { closeAllDialogs, useDialog, vModels } from '@myorg/shared/composables'
 import { showToast } from 'vant'
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
 
 const router = useRouter()
 
@@ -88,10 +86,12 @@ function handleMultiple() {
       title: '第一层弹窗',
       message: '点击确定打开第二层',
       onConfirm: () => openSecondLayer(),
+      onClose: () => {
+        layer1.close()
+        showToast('第一层取消')
+      },
     },
   })
-
-  layer1.result.catch(() => showToast('第一层取消'))
 
   function openSecondLayer() {
     const layer2 = useDialog(ConfirmDialog, {
@@ -99,8 +99,8 @@ function handleMultiple() {
         title: '第二层弹窗',
         message: '点击确定打开第三层',
         onConfirm: () => openThirdLayer(),
-        onCancel: () => {
-          layer2.cancel()
+        onClose: () => {
+          layer2.close()
           showToast('第二层取消，第一层仍在')
         },
       },
@@ -118,8 +118,8 @@ function handleMultiple() {
             layer1.close()
             showToast('三层同时关闭')
           },
-          onCancel: () => {
-            layer3.cancel()
+          onClose: () => {
+            layer3.close()
             showToast('第三层取消，前两层仍在')
           },
         },

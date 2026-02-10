@@ -26,10 +26,8 @@ export interface DialogOptions<P = Record<string, unknown>> {
 export interface DialogInstance<T = unknown> {
   /** Promise 结果，await 等待用户操作 */
   result: Promise<T>
-  /** 手动关闭（resolve）- 自动判断是否需要动画 */
+  /** 手动关闭弹窗（resolve） */
   close: (payload?: T) => void
-  /** 手动取消（reject）- 自动判断是否需要动画 */
-  cancel: (reason?: unknown) => void
 }
 
 /**
@@ -71,7 +69,6 @@ export function useDialog<T = unknown, P = Record<string, unknown>>(
     return {
       result: Promise.reject(new Error('useDialog is not available in SSR')),
       close: () => {},
-      cancel: () => {},
     }
   }
 
@@ -165,32 +162,15 @@ export function useDialog<T = unknown, P = Record<string, unknown>>(
   }
   container.addEventListener('click', handleOverlayClick)
 
-  // 7. 准备 Props
+  // 合并 Props：只处理 onConfirm 和 onClose
   const userProps = props as Record<string, unknown>
-  const hasCustomConfirm = typeof userProps.onConfirm === 'function'
-  const hasCustomCancel = typeof userProps.onCancel === 'function'
-  const hasCustomClose = typeof userProps.onClose === 'function'
+  const defaultConfirm = (payload: T) => cleanup(isTopDialog(stackItem), () => _resolve(payload))
+  const defaultClose = () => cleanup(isTopDialog(stackItem), () => _reject())
 
   const mergedProps: Record<string, unknown> = {
     ...props,
-    onConfirm: hasCustomConfirm
-      ? userProps.onConfirm
-      : (payload: T) => {
-          const animate = isTopDialog(stackItem)
-          cleanup(animate, () => _resolve(payload))
-        },
-    onCancel: hasCustomCancel
-      ? userProps.onCancel
-      : (payload?: unknown) => {
-          const animate = isTopDialog(stackItem)
-          cleanup(animate, () => _reject(payload))
-        },
-    onClose: hasCustomClose
-      ? userProps.onClose
-      : () => {
-          const animate = isTopDialog(stackItem)
-          cleanup(animate, () => _reject(new Error('Dialog closed')))
-        },
+    onConfirm: typeof userProps.onConfirm === 'function' ? userProps.onConfirm : defaultConfirm,
+    onClose: typeof userProps.onClose === 'function' ? userProps.onClose : defaultClose,
   }
 
   // 8. 创建虚拟节点
@@ -210,10 +190,6 @@ export function useDialog<T = unknown, P = Record<string, unknown>>(
     close: (payload?: T) => {
       const animate = isTopDialog(stackItem)
       cleanup(animate, () => _resolve(payload as T))
-    },
-    cancel: (reason?: unknown) => {
-      const animate = isTopDialog(stackItem)
-      cleanup(animate, () => _reject(reason))
     },
   }
 }

@@ -8,7 +8,7 @@ defineProps<{
 
 const emit = defineEmits<{
   (e: 'confirm', result: boolean): void
-  (e: 'cancel'): void
+  (e: 'close'): void
 }>()
 </script>
 
@@ -21,7 +21,7 @@ const emit = defineEmits<{
       {{ message || '确定要执行操作吗？' }}
     </p>
     <div class="flex gap-2 justify-end">
-      <BaseButton size="small" plain @click="emit('cancel')">
+      <BaseButton size="small" plain @click="emit('close')">
         取消
       </BaseButton>
       <BaseButton size="small" type="primary" @click="emit('confirm', true)">

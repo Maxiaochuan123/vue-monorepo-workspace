@@ -101,7 +101,7 @@ function handleMultiple() {
 ## 手动控制
 
 ```typescript
-const { result, close, cancel } = useDialog(ToastDialog, {
+const { result, close } = useDialog(ToastDialog, {
   closeOnClickOverlay: false,
   props: { message: '3秒后关闭' },
 })
@@ -139,8 +139,7 @@ useDialog.closeAll()
 | 属性/方法 | 类型 | 说明 |
 |-----------|------|------|
 | `result` | `Promise<T>` | 等待用户操作结果 |
-| `close(payload?)` | `function` | 手动关闭（resolve） |
-| `cancel(reason?)` | `function` | 手动取消（reject） |
+| `close(payload?)` | `function` | 手动关闭弹窗（resolve） |
 
 ## CSS 变量
 
@@ -160,14 +159,14 @@ useDialog.closeAll()
 <script setup lang="ts">
 const emit = defineEmits<{
   (e: 'confirm', payload?: any): void
-  (e: 'cancel'): void
+  (e: 'close'): void
 }>()
 </script>
 
 <template>
   <div class="my-dialog">
     <button @click="emit('confirm', data)">确定</button>
-    <button @click="emit('cancel')">取消</button>
+    <button @click="emit('close')">取消</button>
   </div>
 </template>
 ```

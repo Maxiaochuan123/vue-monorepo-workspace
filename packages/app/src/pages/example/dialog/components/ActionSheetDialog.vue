@@ -8,7 +8,7 @@ defineProps<{
 
 const emit = defineEmits<{
   (e: 'confirm', value: string): void
-  (e: 'cancel'): void
+  (e: 'close'): void
 }>()
 </script>
 
@@ -32,7 +32,7 @@ const emit = defineEmits<{
         {{ option }}
       </BaseButton>
 
-      <BaseButton block type="default" @click="emit('cancel')">
+      <BaseButton block type="default" @click="emit('close')">
         取消
       </BaseButton>
     </div>

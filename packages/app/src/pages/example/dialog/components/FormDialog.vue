@@ -6,7 +6,7 @@ const props = defineProps<{
 }>()
 const emit = defineEmits<{
   (e: 'confirm'): void
-  (e: 'cancel'): void
+  (e: 'close'): void
   (e: 'customAction', data: string): void
 }>()
 // 使用 defineModel 简化双向绑定
@@ -53,7 +53,7 @@ function handleCustomAction() {
     </div>
 
     <div class="flex gap-2 justify-end">
-      <BaseButton size="small" @click="emit('cancel')">
+      <BaseButton size="small" @click="emit('close')">
         放弃
       </BaseButton>
       <BaseButton size="small" type="primary" @click="emit('confirm')">
