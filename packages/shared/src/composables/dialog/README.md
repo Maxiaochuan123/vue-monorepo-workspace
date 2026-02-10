@@ -18,21 +18,31 @@ import { useDialog } from '@myorg/shared/composables'
 import ConfirmDialog from '@/components/dialog/ConfirmDialog.vue'
 
 async function handleDelete() {
-  try {
-    const { result } = useDialog(ConfirmDialog, {
-      props: {
-        title: '删除确认',
-        message: '确定要删除这条数据吗？',
-      },
-    })
+  // 推荐：直接 await 获取结果和控制器
+  const { action, close } = await useDialog(ConfirmDialog, {
+    props: {
+      title: '删除确认',
+      message: '确定要删除这条数据吗？',
+    },
+  })
 
-    await result
+  if (action === 'confirm') {
     // 用户点击了确定
     deleteData()
-  } catch {
-    // 用户取消或点击遮罩关闭
   }
 }
+```
+
+## 自动关闭控制
+
+默认情况下，触发任意 action（除了 v-model 更新）都会自动关闭弹窗。
+你可以通过 `autoClose` 选项精确控制：
+
+```typescript
+useDialog(FormDialog, {
+  // 仅当 action 不为 'custom' 时自动关闭
+  autoClose: (action) => action !== 'custom'
+})
 ```
 
 ## 底部弹窗
@@ -51,62 +61,13 @@ useDialog(ActionSheet, {
 使用 `vModel` / `vModels` 辅助函数简化双向绑定：
 
 ```typescript
-import { useDialog, vModel, vModels } from '@myorg/shared/composables'
+import { vModel, vModels } from '@myorg/shared/composables'
 
-// 单个绑定
-const nickname = ref('张三')
 useDialog(FormDialog, {
   props: {
-    ...vModel(nickname),
+    ...vModels({ nickname, email }),
   },
 })
-
-// 多个绑定
-const firstName = ref('张')
-const lastName = ref('三')
-useDialog(UserForm, {
-  props: {
-    ...vModels({ firstName, lastName }),
-  },
-})
-```
-
-## 多层弹窗
-
-多层弹窗时，使用 `onConfirm` 阻止自动关闭：
-
-```typescript
-function handleMultiple() {
-  const layer1 = useDialog(ConfirmDialog, {
-    props: {
-      title: '第一层',
-      onConfirm: () => openSecondLayer(),
-    },
-  })
-
-  function openSecondLayer() {
-    const layer2 = useDialog(ConfirmDialog, {
-      props: {
-        title: '第二层',
-        onConfirm: () => {
-          layer2.close() // 栈顶 → 有动画
-          layer1.close() // 非栈顶 → 瞬间关闭
-        },
-      },
-    })
-  }
-}
-```
-
-## 手动控制
-
-```typescript
-const { result, close } = useDialog(ToastDialog, {
-  closeOnClickOverlay: false,
-  props: { message: '3秒后关闭' },
-})
-
-setTimeout(() => close(), 3000)
 ```
 
 ## 关闭所有弹窗
@@ -115,9 +76,32 @@ setTimeout(() => close(), 3000)
 import { closeAllDialogs } from '@myorg/shared/composables'
 
 closeAllDialogs()
+```
 
-// 或
-useDialog.closeAll()
+## 路由跳转清理
+
+建议在全局路由守卫中清理弹窗，防止跨页残留：
+
+```typescript
+// router/index.ts
+import { closeAllDialogs } from '@myorg/shared/composables'
+
+router.beforeEach(() => {
+  closeAllDialogs()
+})
+```
+
+## 全局上下文 (Router/Pinia 支持)
+
+为了在 Setup 外（如 axios 拦截器）正常使用依赖 Router/Pinia 的弹窗，需注入全局上下文：
+
+```typescript
+// main.ts
+import { setDialogContext } from '@myorg/shared/composables'
+
+const app = createApp(App)
+setDialogContext(app) // 注入
+app.mount('#app')
 ```
 
 ## API
@@ -127,19 +111,19 @@ useDialog.closeAll()
 | 参数 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
 | `props` | `object` | `{}` | 传递给组件的 Props |
-| `position` | `'center' \| 'bottom'` | `'center'` | 弹窗位置 |
-| `closeOnClickOverlay` | `boolean` | `true` | 点击遮罩是否关闭 |
-| `lockScroll` | `boolean` | `true` | 是否锁定背景滚动 |
-| `duration` | `number` | `200` | 动画时长（ms） |
-| `mountTo` | `HTMLElement` | `document.body` | 挂载目标 |
-| `appContext` | `AppContext` | - | Vue 应用上下文 |
+| `actions` | `string[]` | `[]` | 声明哪些事件会 resolve Promise |
+| `autoClose` | `boolean \| (action) => boolean` | `true` | 是否自动关闭 |
+| `position` | `'center' \| 'bottom' \| ...` | `'center'` | 弹窗位置 |
+| `mountTo` | `HTMLElement` | `body` | 挂载节点 |
+| `appContext` | `AppContext` | - | 手动指定上下文 |
 
-### DialogInstance
+### DialogResult
 
-| 属性/方法 | 类型 | 说明 |
-|-----------|------|------|
-| `result` | `Promise<T>` | 等待用户操作结果 |
-| `close(payload?)` | `function` | 手动关闭弹窗（resolve） |
+| 属性 | 类型 | 说明 |
+|------|------|------|
+| `action` | `string` | 触发的事件名 (confirm, close...) |
+| `data` | `T` | 事件携带的数据 |
+| `close` | `() => void` | 手动关闭当前弹窗 |
 
 ## CSS 变量
 
